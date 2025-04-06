@@ -1,20 +1,22 @@
 import React, { useContext, useState } from 'react'
 import { assets } from '../assets/assets'
 import  { RecipeContext } from '../context/RecipeContext'
-import { Link } from 'react-router-dom'
+import { Link } from 'react-scroll'
 
 const Navbar = () => {
 const [userIcon,setUserIcon] = useState(false)
 const {navigate} =useContext(RecipeContext);
 
   return (
-    <div className=' flex justify-between p-2 h-14  bg-green-200/50 border-b-2 border-green-400'>
+    <div className=' fixed top-0 w-full z-30 flex justify-between p-2 h-14  bg-green-200/50 border-b-2 border-green-400'>
       <div>
+        
         <img onClick={()=>navigate('/')}  src={assets.logo} alt="" className=' w-32 p-2 cursor-pointer' />
+        
       </div>
       <div className=' flex gap-5 p-2'>
-         <Link to='home' className=' font-[Outfit] cursor-pointer hover:pb-6 hover:border-b-2   hover:border-green-950 '>Home</Link>
-         <Link to='about' className=' font-[Outfit] cursor-pointer hover:pb-6 hover:border-b-2 hover:border-green-950 '>About us</Link>
+         <Link to='home'smooth='true' className=' font-[Outfit] cursor-pointer hover:pb-6 hover:border-b-2   hover:border-green-950 '>Home</Link>
+         <Link to='about' smooth='true' className=' font-[Outfit] cursor-pointer hover:pb-6 hover:border-b-2 hover:border-green-950 '>About us</Link>
          {
             userIcon?<></>:<><p onClick={()=>navigate('/dashboard')} className='cursor-pointer hover:pb-6 font-[Outfit] hover:border-b-2 hover:border-green-950 '>Dashboard</p></>
          }

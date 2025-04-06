@@ -8,6 +8,7 @@ import Sidebar from './pages/Sidebar.jsx'
 import Add from './pages/Add.jsx'
 import List from './pages/List.jsx'
 import Favourite from './pages/Favourite.jsx'
+import RecipeList from './components/RecipeList.jsx'
 
 const App = () => {
   return (
@@ -22,6 +23,7 @@ const App = () => {
             <Route path='list' element ={<List/>}/>
             <Route path='favourite' element={<Favourite/>}></Route>
         </Route>
+        <Route path='/list' element={<RecipeList/>}/>
       </Routes>
       <Footer/>
     </div>

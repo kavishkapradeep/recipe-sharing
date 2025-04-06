@@ -5,7 +5,7 @@ import About from '../components/About'
 
 const Home = () => {
   return (
-    <div>
+    <div id='home'>
       <Hero/>
       <Category/>
       <About/>

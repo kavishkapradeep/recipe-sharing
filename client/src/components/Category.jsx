@@ -1,13 +1,15 @@
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { assets, food_list, menu_list } from '../assets/assets'
+import { RecipeContext } from '../context/RecipeContext'
 
 const Category = () => {
 
     const [category,setCategory] = useState('Salad')
+    const {navigate}=useContext(RecipeContext)
     
 
   return (
-    <div className=' mt-3 flex flex-col items-center justify-center'>
+    <div id='category' className=' mt-3 flex flex-col items-center justify-center'>
         <h2 className=' text-4xl mb-5 font-[Outfit] font-semibold'>Category</h2>
       <div>
          <div className=' flex mt-8 gap-5 bg-gradient-to-br from-green-200 rounded-full to-green-400 p-6'>
@@ -32,12 +34,14 @@ const Category = () => {
                             <p className=' text-xl font-[Outfit]'>{item.name}</p>
                             
                             <div className=' mt-2 cursor-pointer'>
-                                {item.favorite==='yes'?
-                                <img className=' w-4' src={assets.love} alt="" />
+                            
+                                {item.favorite==='no'?
+                                <img className=' w-4 ' src={assets.love} alt="" />
                             :    <img className=' w-4' src={assets.favorite} alt="" />
                                 
                                 }
                             </div>
+                            
                         </div>
                     </div>
                 </div>
@@ -48,7 +52,7 @@ const Category = () => {
       </div>
       
       <div className=' mt-5'>
-         <button className=' cursor-pointer bg-green-300 p-3 text-2xl rounded-4xl font-[Outfit] font-semibold'>View more <i class="ri-external-link-fill"></i></button>
+         <button onClick={()=>navigate('/list')} className=' cursor-pointer bg-green-300 p-3 text-2xl rounded-4xl font-[Outfit] font-semibold'>View more <i class="ri-external-link-fill"></i></button>
       </div>
       < hr  className=' h-1 w-full mt-3 bg-green-900'/>
     </div>
