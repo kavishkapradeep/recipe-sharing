@@ -1,9 +1,11 @@
-import React from 'react'
+import React, { useContext, useEffect } from 'react'
+import { RecipeContext } from '../context/RecipeContext'
 
 const List = () => {
+  
   return (
     <div>
-      dd
+      
     </div>
   )
 }

@@ -1,6 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react'
 import { assets, food_list } from '../assets/assets'
 import { RecipeContext } from '../context/RecipeContext'
+import { Link } from 'react-router-dom'
 
 const RecipeList = () => {
     const {recipe,searchFilter,setSearchFilter}= useContext(RecipeContext)
@@ -37,7 +38,9 @@ const RecipeList = () => {
       <div className=' grid grid-cols-4'>
          { filter.map((item,index)=>{
             return(
+                
                 <div key={index} className=' cursor-pointer flex flex-col justify-center items-center p-2 bg-gradient-to-l from-green-400 to-green-200 rounded-xl m-2'>
+                    <Link to={`/list/${item._id}`} className=' flex flex-col justify-center items-center'>
                     <p className=' text-2xl pt-4 pb-4 font-semibold font-[Outfit]'>{item.name}</p>
                     <img src={item.image} alt="" className=' w-40 h-40 rounded-full border-2 border-green-950 ' />
                     <div className=' flex pt-4 font-semibold justify-center items-center p-2'>
@@ -49,6 +52,7 @@ const RecipeList = () => {
                         {item.favorite === 'yes'?<img src={assets.favorite} alt=""  className='w-6 h-6'/>: <img className='w-6 h-6' src={assets.love}/>}
                         </div>
                     </div>
+                    </Link>
                 </div>
             )
          })
