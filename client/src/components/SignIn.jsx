@@ -10,6 +10,7 @@ const SignIn = () => {
     const [email,setEmail] = useState('')
     const [password,setPassword] = useState('')
 
+    //register user
     const handleRegister = async (e)=>{
         e.preventDefault();
 
@@ -44,7 +45,7 @@ const SignIn = () => {
             
         }
     }
-
+//login user
     const handleLogin = async (e)=>{
         e.preventDefault()
        
@@ -74,7 +75,7 @@ const SignIn = () => {
  
     
 
-    {/*Screen scroll block */}
+    //Screen scroll block 
     useEffect(()=>{
         if (showLogin === true) {
             document.body.style.overflow='hidden'
