@@ -3,7 +3,7 @@ import Sidebar from './Sidebar'
 
 const Dashboard = () => {
   return (
-    <div >
+    <div className=' w-full' >
        <Sidebar/>
     </div>
   )

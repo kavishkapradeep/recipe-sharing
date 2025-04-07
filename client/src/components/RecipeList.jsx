@@ -12,14 +12,18 @@ const RecipeList = () => {
     const handleSearchChange = (e)=>{
         setSearchFilter(e.target.value);
     }
-
-    const handleSearchRecipe = ()=>{
-        const fillterRecipe = recipe.filter((item)=>
-            item.name.toLowerCase().includes(searchFilter.toLowerCase()))  
-            setFilter(fillterRecipe)
-            
-    }
-
+//filter search item
+    useEffect(() => {
+        const filteredRecipe = recipe.filter((item) =>
+            item.name.toLowerCase().includes(searchFilter.toLowerCase())
+        );
+    
+        if (searchFilter.trim().length > 0) {
+            setFilter(filteredRecipe);
+        } else {
+            setFilter(recipe);
+        }
+    }, [recipe, searchFilter]);
     
 
   return (
@@ -28,7 +32,7 @@ const RecipeList = () => {
         {/*Search Bar */}
         <div className=' pt-20 flex justify-center items-center '>
             <input type='text' value={searchFilter} onChange={handleSearchChange} className=' bg-green-200 outline-none h-9 w-96 mr-2 p-2'  />
-            <img onClick={handleSearchRecipe} className='w-9 cursor-pointer  bg-green-200 p-1 -ml-2 rounded-r-full' src={assets.search_icon} alt="" />
+            <img  className='w-9 cursor-pointer  bg-green-200 p-1 -ml-2 rounded-r-full' src={assets.search_icon} alt="" />
         </div>
         <div className=' flex justify-center text-3xl font-[Outfit] font-semibold mt-5'>
       <h2 className=' mb-3'>All Recipe List</h2>

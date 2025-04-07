@@ -12,6 +12,7 @@ import RecipeList from './components/RecipeList.jsx'
 import RecipeItem from './components/RecipeItem.jsx'
 import { RecipeContext } from './context/RecipeContext.jsx'
 import SignIn from './components/SignIn.jsx'
+import Update from './pages/Update.jsx'
 
 
 const App = () => {
@@ -26,8 +27,10 @@ const App = () => {
         <Route path='/dashboard' element={<Dashboard/>}/>
         <Route path='/sidebar' element={<Sidebar/>}>
             <Route path='add-recipe' element={<Add/>}></Route>
+            <Route path='update' element={<Update/>}></Route>
             <Route path='list' element ={<List/>}/>
             <Route path='favourite' element={<Favourite/>}></Route>
+            
         </Route>
         <Route path='/list' element={<RecipeList/>}/>
         <Route path='/list/:id' element={<RecipeItem/>}/>
