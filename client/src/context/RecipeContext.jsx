@@ -12,6 +12,7 @@ const RecipeContextProvider =(props)=>{
     const [showLogin,setShowLogin]= useState(false)
     const [userId,setUserId]= useState(null)
     const [userData ,setUserData]= useState(null)
+    const[recipeId,setRecipeId] =useState(null)
 
 const fetchRecipe = async ()=>{
     try {
@@ -60,7 +61,7 @@ useEffect(()=>{
 
 const contextValue ={
     navigate,searchFilter,setSearchFilter,recipe,showLogin,setShowLogin,url
-    ,userId,setUserId
+    ,userId,setUserId,recipeId,setRecipeId
 }
 
     return(

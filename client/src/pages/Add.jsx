@@ -1,19 +1,22 @@
-import React, { useContext, useState } from 'react'
+import React, { useContext, useEffect, useRef, useState } from 'react'
 import { RecipeContext } from '../context/RecipeContext'
+import Quill from 'quill'
 
 const Add = () => {
 
   const [name,setName] = useState('')
   const [category,setCategory]= useState('')
-  const [description,setDescription] = useState('')
+  
   const [image,setImage]=useState(null)
   const {url,userId} = useContext(RecipeContext)
   const [imageUrl,setImageUrl]=useState('')
 
+  const editRef =useRef(null)
+  const quillRef =useRef(null)
   //upload image
-  const handleImageUpload = async (file) =>{
+  const handleImageUpload = async () =>{
     const formData = new FormData();
-    formData.append('file',file)
+    formData.append('file',image)
     formData.append('upload_preset','Recipe')
    
 
@@ -25,21 +28,29 @@ const Add = () => {
 
       const data2 = await resp.json()
       setImageUrl(data2.secure_url)
-      console.log(data2.secure_url);
+      
+      return data2.secure_url
+      
     } catch (error) {
       console.log(error);
       
     }
   }
 
+  useEffect(()=>{
+   
+    
+  },[imageUrl])
+
   //add item 
   const handleAdd = async (e)=>{
     e.preventDefault()
-    console.log(userId);
+    const description = quillRef.current.root.innerHTML
 
   
     try {
 
+      const updateUrl = await handleImageUpload()
       
       
       
@@ -52,7 +63,8 @@ const Add = () => {
             name:name,
             category:category,
             description:description,
-            image:imageUrl
+            image:updateUrl,
+            userId:userId
         })
      })
      const data1 = await response.json()
@@ -74,10 +86,13 @@ const Add = () => {
  
      const data = await res.json()
      console.log(data);
+     console.log(data1);
+     
      setImage('')
      setCategory('')
      setName('')
-     setDescription('')
+     quillRef.current.root.innerHTML =""
+     setImageUrl('')
  
     } catch (error) {
       console.log(error);
@@ -85,6 +100,13 @@ const Add = () => {
     }
     
      }
+     useEffect(()=>{
+      if (!quillRef.current &&editRef.current) {
+         quillRef.current = new Quill(editRef.current,{
+             theme:'snow'
+         })
+      }
+   },[])  
 
   return (
     <div className=' '>
@@ -97,12 +119,12 @@ const Add = () => {
                <form onSubmit={handleAdd} >
                    <div className=' flex  ml-5'>
                        <p className=' p-2 text-xl'>Name</p>
-                       <input value={name} onChange={(e)=>setName(e.target.value)}  type="text"  className=' bg-green-200 w-[350px] p-2 ml-5 '/>
+                       <input required value={name} onChange={(e)=>setName(e.target.value)}  type="text"  className=' bg-green-200 w-[350px] p-2 ml-5 '/>
                    </div>
                    <div className=' flex ml-5 mt-3 mb-3'>
                        <p className=' p-2 text-xl'>Category</p>
                        
-                       <select value={category} onChange={(e)=>setCategory(e.target.value)} name="" id="" className=' bg-green-200  p-2 ml-5 '>
+                       <select required value={category} onChange={(e)=>setCategory(e.target.value)} name="" id="" className=' bg-green-200  p-2 ml-5 '>
                           <option value="">Choose</option>
                           <option value="Salad">Salad</option>
                           <option value="Rolls">Rolls</option>
@@ -114,13 +136,13 @@ const Add = () => {
                           <option value="Noodles" >Noodles</option>
                        </select>
                    </div>
-                   <div className=' flex ml-5'>
+                   <div className=' flex ml-5 flex-col'>
                        <p className=' p-2 text-xl'>Description</p>
-                       <textarea value={description} onChange={(e)=>setDescription(e.target.value)} className=' bg-green-200  p-2 ml-5 w-[300px]'  name="" id=""></textarea>
+                       <div ref={editRef}></div>
                    </div>
                    <div className=' flex ml-5 mt-3 mb-3' >
                      <p className=' p-2 text-xl'>image</p>
-                     <input  onChange={(e)=>{const file =e.target.files[0];setImage(file);handleImageUpload(file)}} type="file" name="" id="" className=' bg-green-200  p-2 ml-5 w-[300px] font-semibold' />
+                     <input required  onChange={(e)=>{const file =e.target.files[0];setImage(file)}} type="file"  className=' bg-green-200  p-2 ml-5 w-[300px] font-semibold' />
                    </div>
                    <div className=' flex justify-center mt-8 mb-8'>
                      <button type='submit' className=' bg-green-300 p-2 w-72 rounded-2xl text-2xl font-semibold hover:bg-green-50 cursor-pointer'>SUBMIT</button>

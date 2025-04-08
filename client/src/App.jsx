@@ -13,7 +13,7 @@ import RecipeItem from './components/RecipeItem.jsx'
 import { RecipeContext } from './context/RecipeContext.jsx'
 import SignIn from './components/SignIn.jsx'
 import Update from './pages/Update.jsx'
-
+import 'quill/dist/quill.snow.css'
 
 const App = () => {
   const {showLogin} = useContext(RecipeContext)
