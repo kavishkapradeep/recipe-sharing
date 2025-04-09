@@ -6,7 +6,7 @@ const Add = () => {
 
   const [name,setName] = useState('')
   const [category,setCategory]= useState('')
-  
+  const [time,setTime]=useState(null)
   const [image,setImage]=useState(null)
   const {url,userId,fetch_list} = useContext(RecipeContext)
   const [imageUrl,setImageUrl]=useState('')
@@ -64,7 +64,8 @@ const Add = () => {
             category:category,
             description:description,
             image:updateUrl,
-            userId:userId
+            userId:userId,
+            time:time
         })
      })
      const data1 = await response.json()
@@ -92,6 +93,7 @@ const Add = () => {
      setName('')
      quillRef.current.root.innerHTML =""
      setImageUrl('')
+     setTime('')
  
     } catch (error) {
       console.log(error);
@@ -119,6 +121,10 @@ const Add = () => {
                    <div className=' flex  ml-5'>
                        <p className=' p-2 text-xl'>Name</p>
                        <input required value={name} onChange={(e)=>setName(e.target.value)}  type="text"  className=' bg-green-200 w-[350px] p-2 ml-5 '/>
+                   </div>
+                   <div className=' flex  ml-5 mt-3'>
+                     <p className=' p-2 text-xl'>setTime(minutes)</p>
+                     <input type="number" required value={time}  onChange={(e)=>setTime(e.target.value)} className=' bg-green-200 w-[250px] p-2 ml-5 '/>
                    </div>
                    <div className=' flex ml-5 mt-3 mb-3'>
                        <p className=' p-2 text-xl'>Category</p>

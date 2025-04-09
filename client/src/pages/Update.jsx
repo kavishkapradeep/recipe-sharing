@@ -9,6 +9,7 @@ const Update = () => {
   const [description,setDescription]= useState('')
   const [image,setImage]= useState('')
   const [img,setImg] =useState(null)
+  const [time,setTime]=useState('')
   const [search,setSearch] = useState('')
 
   const editRef = useRef(null)
@@ -19,19 +20,22 @@ const Update = () => {
     try {
        const res = await fetch(`${url}/Recipe/${search}`)
        const data =await res.json()
-
+ console.log(data);
+ 
        if (data.userId===userId) {
         setName(data.name)
         setCategory(data.category)
         setDescription(data.description)
         quillRef.current.root.innerHTML = data.description
         setImage(data.image) 
+        setTime(data.time)
        }else{
         alert("User not Found !")
         setName("")
         setCategory("")
         setDescription("")
         setImage("")
+        setTime('')
         quillRef.current.root.innerHTML=""
        }
        
@@ -52,7 +56,7 @@ const Update = () => {
        setDescription(data.description)
        quillRef.current.root.innerHTML = data.description
        setImage(data.image)
-       
+       setTime(data.time)
       
        
      } catch (error) {
@@ -94,6 +98,7 @@ const Update = () => {
       category,
       description:quillRef.current.root.innerHTML,
       image:updateUrl
+      ,time:time
      }
 
    
@@ -118,6 +123,7 @@ const Update = () => {
        setImg('')
        setImage('')
        setRecipeId('')
+       setTime('')
        quillRef.current.root.innerHTML =""
      } catch (error) {
        console.log(error);
@@ -157,6 +163,10 @@ const Update = () => {
                <div className=' flex  ml-5'>
                        <p className=' p-2 text-xl'>Name</p>
                        <input value={name} onChange={(e)=>setName(e.target.value)} type="text"  className=' bg-green-200 w-[350px] p-2 ml-5 '/>
+                   </div>
+                   <div className=' flex  ml-5 mt-3'>
+                     <p className=' p-2 text-xl'>setTime(minutes)</p>
+                     <input type="number"  value={time}  onChange={(e)=>setTime(e.target.value)} className=' bg-green-200 w-[250px] p-2 ml-5 '/>
                    </div>
                    <div className=' flex ml-5 mt-3 mb-3'>
                        <p className=' p-2 text-xl'>Category</p>

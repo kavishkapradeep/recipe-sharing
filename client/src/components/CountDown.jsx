@@ -1,8 +1,7 @@
 import React, { useState ,useEffect } from 'react'
 
-const CountDown = ({ minutes = 1 }) => {
-    const [timeLeft, setTimeLeft] = useState(minutes * 60); // time in seconds
-
+const CountDown = ({ timeLeft,setTimeLeft}) => {
+   
     useEffect(() => {
       if (timeLeft === 0) return;
   
@@ -11,7 +10,7 @@ const CountDown = ({ minutes = 1 }) => {
       }, 1000);
   
       return () => clearInterval(timer);
-    }, [timeLeft]);
+    }, [timeLeft,setTimeLeft]);
   
     const formatTime = () => {
       const m = String(Math.floor(timeLeft / 60)).padStart(2, '0');
@@ -21,8 +20,8 @@ const CountDown = ({ minutes = 1 }) => {
   
     return (
       <div className="text-center mt-10">
-        <h2 className="text-3xl font-bold text-green-700">
-          ⏳ Time Remaining: {formatTime()}
+        <h2 className="text-6xl font-bold text-green-700">
+          {formatTime()}
         </h2>
       </div>
     );
