@@ -14,7 +14,7 @@ const Hero = () => {
             <h2 className=' text-7xl text-green-700 font-bold mt-3 mb-4'>New Food</h2>
             <div className=' flex gap-2 mt-5  flex-col text-xl'>
             <p className=' text-white'><span className=' mr-3'>New</span>Recipe is Here</p>
-            <button onClick={()=>navigate('/list')} className=' bg-green-100 rounded-4xl p-2 cursor-pointer mt-5 hover:drop-shadow-[2px_2px_8px_rgba(200,10,20,0.3)]'>view Recipe <i class="ri-external-link-fill"></i></button>
+            <button onClick={()=>navigate('/list')} className=' bg-green-100 rounded-4xl p-2 cursor-pointer mt-5 hover:drop-shadow-[2px_2px_8px_rgba(200,10,20,0.3)]  hover:bg-green-200  hover:scale-105 duration-300 hover:rounded'>view Recipe <i class="ri-external-link-fill"></i></button>
             </div>
             
        </div>

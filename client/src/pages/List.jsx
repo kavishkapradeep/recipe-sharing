@@ -74,6 +74,7 @@ const List = () => {
   useEffect(()=>{
     handleList()
     
+    console.log(list);
     
     
     

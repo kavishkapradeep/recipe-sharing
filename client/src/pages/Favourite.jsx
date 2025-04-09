@@ -9,7 +9,7 @@ const Favourite = () => {
      const res = await fetch(`${url}/Recipe`)
      const data = await res.json()
 
-     const userRecipes = data.filter(u=> u.favourite === true)
+     const userRecipes = data.filter(u=>u.userId===userId&& u.favourite === true)
      setList(userRecipes)
   }
 

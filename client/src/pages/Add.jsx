@@ -8,7 +8,7 @@ const Add = () => {
   const [category,setCategory]= useState('')
   
   const [image,setImage]=useState(null)
-  const {url,userId} = useContext(RecipeContext)
+  const {url,userId,fetch_list} = useContext(RecipeContext)
   const [imageUrl,setImageUrl]=useState('')
 
   const editRef =useRef(null)
@@ -85,8 +85,7 @@ const Add = () => {
      })
  
      const data = await res.json()
-     console.log(data);
-     console.log(data1);
+     fetch_list()
      
      setImage('')
      setCategory('')

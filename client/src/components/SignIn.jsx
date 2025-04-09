@@ -113,8 +113,8 @@ const SignIn = () => {
                     Already have a Account <span className=' cursor-pointer text-green-800' onClick={()=>setCurrState('LogIn')}>LogIn</span></p>}
             </div>
 
-            {currState==='LogIn'?<button onClick={handleLogin} className=' mt-3 mb-3 cursor-pointer bg-green-400 rounded-full p-2 hover:bg-green-200 text-xl font-semibold'>LogIn</button>
-            :<button onClick={handleRegister} className=' mt-3 mb-3 cursor-pointer bg-green-400 rounded-full p-2 hover:bg-green-200 text-xl font-semibold'>SignUp</button>
+            {currState==='LogIn'?<button onClick={handleLogin} className='hover:bg-green-200  hover:scale-105 duration-300 hover:rounded mt-3 mb-3 cursor-pointer bg-green-400 rounded-full p-2   text-xl font-semibold'>LogIn</button>
+            :<button onClick={handleRegister} className=' mt-3 mb-3 cursor-pointer bg-green-400 rounded-full p-2   hover:scale-105 duration-300 hover:rounded hover:bg-green-200 text-xl font-semibold'>SignUp</button>
             }
           </form>
           

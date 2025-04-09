@@ -4,9 +4,9 @@ import { RecipeContext } from '../context/RecipeContext'
 import { Link } from 'react-router-dom'
 
 const RecipeList = () => {
-    const {recipe,searchFilter,setSearchFilter}= useContext(RecipeContext)
+    const {fetchlist,searchFilter,setSearchFilter,recipeId,setRecipeId,navigate}= useContext(RecipeContext)
     
-    const [filter,setFilter]= useState(recipe)
+    const [filter,setFilter]= useState(fetchlist)
     
 
     const handleSearchChange = (e)=>{
@@ -14,16 +14,30 @@ const RecipeList = () => {
     }
 //filter search item
     useEffect(() => {
-        const filteredRecipe = recipe.filter((item) =>
+        const filteredRecipe = fetchlist.filter((item) =>
             item.name.toLowerCase().includes(searchFilter.toLowerCase())
         );
     
         if (searchFilter.trim().length > 0) {
             setFilter(filteredRecipe);
         } else {
-            setFilter(recipe);
+            setFilter(fetchlist);
         }
-    }, [recipe, searchFilter]);
+      
+        
+    }, [fetchlist, searchFilter]);
+    
+    //get recipeid 
+    const handelRecipe = async (id)=>{
+        await setRecipeId(id)
+        
+        navigate(`/list/${id}`)
+    }
+    useEffect(()=>{
+        
+         
+    },[recipeId])
+
     
 
   return (
@@ -43,20 +57,22 @@ const RecipeList = () => {
          { filter.map((item,index)=>{
             return(
                 
-                <div key={index} className=' cursor-pointer flex flex-col justify-center items-center p-2 bg-gradient-to-l from-green-400 to-green-200 rounded-xl m-2'>
-                    <Link to={`/list/${item._id}`} className=' flex flex-col justify-center items-center'>
+                <div key={index}  onClick={()=>handelRecipe(item.id)} className=' cursor-pointer flex flex-col justify-center items-center p-2 bg-gradient-to-t from-green-400 to-green-200  rounded-xl m-2'>
+                    <div  className=' flex flex-col justify-center items-center cursor-pointer'>
                     <p className=' text-2xl pt-4 pb-4 font-semibold font-[Outfit]'>{item.name}</p>
                     <img src={item.image} alt="" className=' w-40 h-40 rounded-full border-2 border-green-950 ' />
-                    <div className=' flex pt-4 font-semibold justify-center items-center p-2'>
-                        <p>{item.description.slice(0,100)}...</p>
+                    <div className=' flex pt-4 font-semibold justify-center items-center p-2 flex-col'>
+                       <p>Description :</p> <p  className=' text-black/50 w-full text-[10px]' dangerouslySetInnerHTML={{__html:item.description.slice(0,500)}}></p>
                     </div>
                     <div className=' flex justify-between p-4 gap-6'>
                     <p className=' text-xl font-semibold font-[Outfit]'>{item.category}</p>
                         <div>
                         {item.favorite === 'yes'?<img src={assets.favorite} alt=""  className='w-6 h-6'/>: <img className='w-6 h-6' src={assets.love}/>}
                         </div>
+                       
                     </div>
-                    </Link>
+                    <div className='  flex gap-2 p-2 bg-green-200 cursor-pointer rounded-2xl'><i class="ri-add-circle-line"></i><p>Add to Favourite</p></div>
+                    </div>
                 </div>
             )
          })
