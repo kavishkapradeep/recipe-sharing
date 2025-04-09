@@ -35,7 +35,7 @@ const SignIn = () => {
         localStorage.setItem('userId',id)
         setUserId(id)
         if (res.ok) {
-            console.log(data);
+            
             setEmail('')
             setPassword('')
             setName('')

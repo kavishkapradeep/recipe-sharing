@@ -1,16 +1,28 @@
 import React, { useContext, useEffect, useState } from 'react'
 import { RecipeContext } from '../context/RecipeContext'
+import CountDown from '../components/CountDown'
 
 const Favourite = () => {
   const [list,setList] = useState([])
   const {userId,url,recipeId,setRecipeId} = useContext(RecipeContext)
 
   const handleList = async ()=>{
-     const res = await fetch(`${url}/Recipe`)
+     const res = await fetch(`${url}/user/${userId}`)
      const data = await res.json()
+    
+     const res2 = await fetch(`${url}/Recipe`)
+     const data2 =  await res2.json()
 
-     const userRecipes = data.filter(u=>u.userId===userId&& u.favourite === true)
-     setList(userRecipes)
+     console.log(data);
+     console.log(data2);
+     
+    
+     const favoriteRecipeList = data2.filter(recipe =>
+      data.favouritelist.includes(recipe.id)
+     
+    )
+    setList(favoriteRecipeList)
+    console.log("Favorite Recipes:", favoriteRecipeList)
   }
 
   const handleDelete = async (id)=>{
@@ -75,7 +87,7 @@ const Favourite = () => {
                           <td>Name</td>
                           <td>Category</td>
                           <td>Image</td>
-                          <td>Favourite</td>
+                          
                           
                           <td>Delete</td>
                        </tr>
@@ -86,9 +98,9 @@ const Favourite = () => {
                             <tr key={index} className=' flex  mt-2 border-b border-green-900/80 justify-between'>
                                 <td className=' flex ml-3'>{index+1}</td>
                                 <td className=' w-2'>{recipe.name}</td>
-                                <td className=' w-14'>{recipe.category}</td>
-                                <td> <img className=' w-12 h-12 p-1' src={recipe.image} alt="" /></td>
-                                <td > <input onChange={()=>handleUpdate(recipe.id)} className=' cursor-pointer' type="checkbox" name="" id="" checked={recipe.favourite}/></td>
+                                <td className=' w-14 px-6'>{recipe.category}</td>
+                                <td> <img className=' w-12 h-12  -mr-6' src={recipe.image} alt="" /></td>
+                               
                                
                                 <td ><button  onClick={()=>handleDelete(recipe.id)} className=' cursor-pointer rounded-lg bg-green-300 p-1'>Delete</button></td>
                             </tr>
@@ -100,6 +112,7 @@ const Favourite = () => {
                 </table>
             </div>
         </div>
+        <CountDown/>
     </div>
   )
 }

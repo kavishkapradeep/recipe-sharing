@@ -44,72 +44,12 @@ const fetch_list = async () => {
     const value = await data.json()
     setFetchList(value)
 }
-
-//favourite add
-const handleFavourite = async () => {
-    try {
-        const data = await fetch(`${url}/Recipe/${recipeId}`)
-        const recipedata = await data.json()
-
-        const updateFavouriteList = [...recipedata.favouriteList,userId]
-
-        const userData1 = recipedata.favouriteList.includes(userId)
-        
-        
-        
-        if (userData1) {
-            alert('recipe alrdey added')
-        }else{
-
-        const res = await fetch(`${url}/Recipe/${recipeId}`,{
-            method:'PUT',
-            headers:{
-                'Content-type':'application/json'
-            },
-            body:JSON.stringify({
-                favouriteList:updateFavouriteList
-            })
-        })}
-        fetch_list()
-    } catch (error) {
-        console.log(error);
-        
-    }
-}
-
-const fetchFavourite = async () => {
-    try {
-        const data = await fetch(`${url}/Recipe`)
-        const data2 =await data.json()
-        const data3 = await data2.filter(u=>u.favouriteList.includes(userId))
-        console.log( data3);
-        setfavlist(data3)
-        fetch_list()
-    } catch (error) {
-        console.log(error);
-        
-    }
-}
-
-
-useEffect(()=>{
- fetchRecipe()
- fetchUserData()
-  
-},[])
-
-useEffect(()=>{
-   
-   
-    fetchFavourite()
-},[userData])
-
 useEffect(()=>{
     const storeUserId = localStorage.getItem('userId');
     if (storeUserId) {
         setUserId(storeUserId)
-        console.log(userId);
-        console.log(favlist);
+        console.log("User Id localstorage", userId);
+        
     }else{
         console.log(userId);
         
@@ -117,20 +57,109 @@ useEffect(()=>{
 },[userId,recipeId])
 
 
-useEffect(()=>{
- fetch_list()
-},[favlist])
+//favourite add
+const handleFavourite = async () => {
+    try {
+         const res = await fetch(`${url}/user/${userId}`)
+         const userData = await res.json()
+
+         console.log(userData);
+
+         const res1 = await fetch(`${url}/Recipe/${recipeId}`)
+         const recipeData = await res1.json()
+         console.log("recipe Data",recipeData);
+
+         if (userData.favouritelist.includes(recipeData.id)) {
+            console.log("already added!");
+            alert("already added")
+         }else{
+
+         const updateFavourite = [...userData.favouritelist,recipeId]
+         const res2= await fetch(`${url}/user/${userId}`,{
+             method:'PUT',
+             headers:{
+                'content-type':'application/json'
+             },
+             body:JSON.stringify({
+                favouritelist:updateFavourite
+             })
+             
+         })
+
+         const updatedata = await res2.json()
+         console.log(updatedata);
+        }
+         fetch_list()
+         
+         
+         
+    } catch (error) {
+        console.log(error);
+        
+    }
+}
+
+const fetchFavourite = async () => {
+    console.log(userId);
+    try {
+        const res = await fetch(`${url}/user/${userId}`)
+         const userData = await res.json()
+
+         console.log(userData);
+         setfavlist(userData.favouritelist)
+        
+        
+        
+        
+        
+        
+        
+    } catch (error) {
+        console.log(error);
+        
+    }
+}
 
 useEffect(()=>{
-  console.log(fetchlist);
+    fetchFavourite()
+},[userId,recipeId])
+
+useEffect(()=>{
+ fetchRecipe()
+ fetchUserData()
+  console.log("userId",userId);
+  
+},[])
+
+useEffect(()=>{
+   
+   
+    
+},[userData,recipeId])
+
+
+
+
+useEffect(()=>{
+ fetch_list()
+ 
+},[])
+
+useEffect(()=>{
    console.log(favlist);
+      
    
 },[fetchlist])
+
+useEffect(()=>{
+
+},[favlist])
+
 
 const contextValue ={
     navigate,searchFilter,setSearchFilter,recipe,showLogin,setShowLogin,url
     ,userId,setUserId,recipeId,setRecipeId,fetchlist,fetch_list,handleFavourite
-    ,fetchFavourite
+    ,fetchFavourite,favlist
 }
 
     return(

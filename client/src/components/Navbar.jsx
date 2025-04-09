@@ -23,7 +23,7 @@ const handleUserId =async ()=>{
 }
 useEffect(()=>{
   handleUserId()
-  console.log(userId);
+ 
   
 },[userId])
 
@@ -34,7 +34,7 @@ useEffect(()=>{
         <img onClick={()=>navigate('/')}  src={assets.logo} alt="" className=' w-32 p-2 cursor-pointer' />
         
       </div>
-      <div className=' flex gap-5 p-2'>
+      <div className=' max-sm:gap-2 max-sm:text-sm flex gap-5 p-2'>
          <Link to='home'smooth='true' className=' font-[Outfit] cursor-pointer hover:pb-6 hover:border-b-2   hover:border-green-950 '>Home</Link>
          <Link to='about' smooth='true' className=' font-[Outfit] cursor-pointer hover:pb-6 hover:border-b-2 hover:border-green-950 '>About us</Link>
          {

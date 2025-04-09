@@ -32,6 +32,7 @@ const Update = () => {
         setCategory("")
         setDescription("")
         setImage("")
+        quillRef.current.root.innerHTML=""
        }
        
     } catch (error) {
@@ -61,27 +62,28 @@ const Update = () => {
   }
 
   //upload image to Cloudinary
-  const handleImageUpload = async ()=>{
-     const formData = new  FormData()
-     formData.append('file',img)
-     formData.append('upload_preset','Recipe')
-     formData.append('cloud_name','djxf3kkzt')
+  const handleImageUpload = async () => {
+    if (!img) return image 
 
-     try {
-       const res = await fetch('https://api.cloudinary.com/v1_1/djxf3kkzt/image/upload',{
-        method:'POST',
-        body:formData
+    const formData = new FormData()
+    formData.append('file', img)
+    formData.append('upload_preset', 'Recipe')
+    formData.append('cloud_name', 'djxf3kkzt')
+
+    try {
+      const res = await fetch('https://api.cloudinary.com/v1_1/djxf3kkzt/image/upload', {
+        method: 'POST',
+        body: formData
       })
 
-      const data2 = await res.json()
-      setImage(data2.secure_url)
-      
-       return data2.secure_url
-     } catch (error) {
-       console.log(error);
-       
-     }
+      const data = await res.json()
+      return data.secure_url
+    } catch (error) {
+      console.error('Image upload failed:', error)
+      return image
+    }
   }
+
 
   //update Recipe data 
   const handleSubmit = async (e)=>{
@@ -99,7 +101,7 @@ const Update = () => {
         setSearch(recipeId)
       
 
-       const res = await fetch(`${url}/Recipe/${recipeId}`,{
+       const res = await fetch(`${url}/Recipe/${search}`,{
          method:'PUT',
          headers:{
            'Content-Type' : 'application/json'
@@ -186,7 +188,7 @@ const Update = () => {
                      </div>
                    )}
                    <div className=' flex justify-center mt-8 mb-8'>
-                     <button className=' bg-green-300 p-2 w-72 rounded-2xl text-2xl font-semibold hover:bg-green-50 cursor-pointer'>SUBMIT</button>
+                     <button  type='submit' className=' bg-green-300 p-2 w-72 rounded-2xl text-2xl font-semibold hover:bg-green-50 cursor-pointer'>SUBMIT</button>
                    </div>
                </form>
            </div>

@@ -4,7 +4,7 @@ import { RecipeContext } from '../context/RecipeContext'
 import { Link } from 'react-router-dom'
 
 const RecipeList = () => {
-    const {fetchlist,searchFilter,setSearchFilter,recipeId,setRecipeId,navigate}= useContext(RecipeContext)
+    const {userId,fetchlist,searchFilter,favlist,setSearchFilter,recipeId,setRecipeId,navigate,fetchFavourite}= useContext(RecipeContext)
     
     const [filter,setFilter]= useState(fetchlist)
     
@@ -36,16 +36,24 @@ const RecipeList = () => {
     useEffect(()=>{
         
          
+         
     },[recipeId])
 
-    
+    useEffect(()=>{
+        fetchFavourite()
+        
+        
+    },[userId])
+    useEffect(()=>{
+       
+    },[favlist])
 
   return (
     <div  >
         <div >
         {/*Search Bar */}
         <div className=' pt-20 flex justify-center items-center '>
-            <input type='text' value={searchFilter} onChange={handleSearchChange} className=' bg-green-200 outline-none h-9 w-96 mr-2 p-2'  />
+            <input type='text' value={searchFilter} onChange={handleSearchChange} className=' bg-green-200 outline-none h-9 w-96 max-sm:w-48 mr-2 p-2'  />
             <img  className='w-9 cursor-pointer  bg-green-200 p-1 -ml-2 rounded-r-full' src={assets.search_icon} alt="" />
         </div>
         <div className=' flex justify-center text-3xl font-[Outfit] font-semibold mt-5'>
@@ -53,7 +61,7 @@ const RecipeList = () => {
       </div>
       </div>
       {/* Product Display */}
-      <div className=' grid grid-cols-4'>
+      <div className=' grid grid-cols-4  max-sm:grid-cols-2 max-md:grid-cols-3'>
          { filter.map((item,index)=>{
             return(
                 
@@ -67,7 +75,7 @@ const RecipeList = () => {
                     <div className=' flex justify-between p-4 gap-6'>
                     <p className=' text-xl font-semibold font-[Outfit]'>{item.category}</p>
                         <div>
-                        {item.favorite === 'yes'?<img src={assets.favorite} alt=""  className='w-6 h-6'/>: <img className='w-6 h-6' src={assets.love}/>}
+                        {favlist.includes(item.id)?<img src={assets.favorite} alt=""  className='w-6 h-6'/>: <img className='w-6 h-6' src={assets.love}/>}
                         </div>
                        
                     </div>

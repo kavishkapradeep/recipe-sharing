@@ -5,7 +5,7 @@ import { RecipeContext } from '../context/RecipeContext'
 const Category = () => {
 
     const [category,setCategory] = useState('Salad')
-    const {navigate,fetchlist,recipeId,setRecipeId}=useContext(RecipeContext)
+    const {navigate,fetchlist,userId,recipeId,setRecipeId,favlist,fetchFavourite}=useContext(RecipeContext)
     
     const handelRecipe = async (id)=>{
             await setRecipeId(id)
@@ -14,8 +14,8 @@ const Category = () => {
         }
         useEffect(()=>{
             
-             
-        },[recipeId])
+             fetchFavourite()
+        },[recipeId,userId])
     
     useEffect(()=>{
 
@@ -26,7 +26,7 @@ const Category = () => {
     <div id='category' className=' mt-3 flex flex-col items-center justify-center'>
         <h2 className=' text-4xl mb-5 font-[Outfit] font-semibold'>Category</h2>
       <div>
-         <div className=' flex mt-8 gap-5 bg-gradient-to-br from-green-200 rounded-full to-green-400 p-6'>
+         <div className=' flex max-sm:grid max-sm:grid-cols-4 max-md:grid-cols-4 max-md:bg-none mt-8 gap-5 bg-gradient-to-br from-green-200 rounded-full to-green-400 p-6'>
             {menu_list.map((item,index)=>(
                 <div key={index} className=' flex flex-col items-center ml-3 cursor-pointer' onClick={()=>setCategory(item.menu_name)}>
                     <img src={item.menu_image} className=' w-24' alt="" />
@@ -35,21 +35,21 @@ const Category = () => {
             ))}
          </div>
       </div>
-      <div className=' mt-5 flex gap-5 p-1'>
+      <div className=' mt-5 flex-wrap flex gap-5 p-1  max-sm:grid max-sm:grid-cols-2'>
           {
             fetchlist.filter((item)=>item.category === category).slice(0,4).map((item,index)=>{
                 return(
                     <div key={index} onClick={()=>handelRecipe(item.id)} className='hover:bg-green-300 cursor-pointer p-2 bg-gradient-to-l from-green-400 to-green-200 rounded-3xl'>
                     <div className=' p-2  hover:scale-105  300 duration-300'>
                         <div>
-                            <img src={item.image} className=' w-56 h-48 border-2 border-green-900 rounded-2xl' alt="" />
+                            <img src={item.image} className='max-sm:w-32 max-sm:h-36 w-56 h-48 border-2 border-green-900 rounded-2xl' alt="" />
                         </div>
                         <div className=' flex justify-between p-2'>
                             <p className=' text-xl font-[Outfit]'>{item.name}</p>
                             
                             <div className=' mt-2 cursor-pointer'>
                             
-                                {item.favourite?
+                                {(item.id)?
                                ( <img className=' w-4 ' src={assets.favorite} alt="" />)
                             :   ( <img className=' w-4' src={assets.love} alt="" />)
                                 
